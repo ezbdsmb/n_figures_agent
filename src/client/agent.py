@@ -34,19 +34,23 @@ class Agent(UDPClient):
     def run(self):
         # send init
         self.sendto("init queen", self.server_addr)
+        print('send: init queen')
 
         # receive init name
         data, addr = self.recvfrom()
         self.name = parse_name(data)
+        print('received:', data)
 
         # receive judge
         data, addr = self.recvfrom()
         self.judge_addr = addr
+        print('received:', data)
 
         while True:
             # receive board
             data, addr = self.recvfrom()
             self.board = parse_board(data)  # TODO: make update, not rewrite
+            print('received:', data)
 
             print(self.name)
             print(self.board)
@@ -55,6 +59,7 @@ class Agent(UDPClient):
             self.send_collisions()
 
 
+
 if __name__ == '__main__':
-    agent1 = Agent(("localhost", 9999))
+    agent1 = Agent(("localhost", 9998))
     agent1.run()
