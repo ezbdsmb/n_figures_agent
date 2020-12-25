@@ -12,8 +12,8 @@ def parse_board(message):
     return b
 
 
-def parse_name(data):
-    return data.split(' ')[1]
+def parse_name(message):
+    return message.split(' ')[2]
 
 
 if __name__ == '__main__':
