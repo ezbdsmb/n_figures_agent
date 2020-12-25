@@ -1,11 +1,11 @@
 from chess.board import Board
-from chess.under_atack_rules import queen_cells_under_attack
+from chess.under_atack_rules import *
 from client.parsing import *
 from client.udpclient import UDPClient
 
 
 class Agent(UDPClient):
-    def __init__(self, server_addr):
+    def __init__(self, figure='queen', server_addr=("localhost", 9998)):
         super().__init__()
 
         self.server_addr = server_addr
@@ -15,6 +15,7 @@ class Agent(UDPClient):
         self.board = None
         self.width = 0
         self.height = 0
+        self.figure = figure
 
     # TODO: change 8-8 to width-height
     def send_collisions(self):
@@ -22,7 +23,12 @@ class Agent(UDPClient):
         for i in range(self.board.width):
             for j in range(self.board.height):
                 if self.board.board[i][j] == self.name:
-                    cells = queen_cells_under_attack((i, j), self.width, self.height)
+                    if self.figure == 'queen':
+                        cells = queen_cells_under_attack((i, j), self.width, self.height)
+                    elif self.figure == 'rook':
+                        cells = rook_cells_under_attack((i, j), self.width, self.height)
+                    elif self.figure == 'bishop':
+                        cells = bishop_cells_under_attack((i, j), self.width, self.height)
 
         problems = []
         for i in range(self.board.width):
@@ -39,8 +45,8 @@ class Agent(UDPClient):
 
     def run(self):
         # send init
-        self.sendto("init queen", self.server_addr)
-        print('send: init queen')
+        self.sendto(f"init {self.figure}", self.server_addr)
+        print(f'send: "init {self.figure}"')
 
         # receive init name
         data, addr = self.recvfrom()
@@ -67,5 +73,5 @@ class Agent(UDPClient):
 
 
 if __name__ == '__main__':
-    agent1 = Agent(("localhost", 9998))
+    agent1 = Agent()
     agent1.run()
