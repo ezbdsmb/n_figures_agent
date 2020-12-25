@@ -1,10 +1,8 @@
 class Board:
-    def __init__(self):
-        self.board = []
-        for i in range(8):
-            self.board.append([])
-            for j in range(8):
-                self.board[i].append('-')
+    def __init__(self, width=8, height=8):
+        self.resize(width, height)
+        self.width = width
+        self.height = height
 
         self.agents = []
 
@@ -16,11 +14,18 @@ class Board:
             res += '\n'
         return res
 
+    def resize(self, width, height):
+        self.board = []
+        for i in range(width):
+            self.board.append([])
+            for j in range(height):
+                self.board[i].append('-')
+
     def add_figure(self, figure, x, y):
         self.board[x][y] = figure
 
 
 if __name__ == '__main__':
-    b = Board()
+    b = Board(10, 5)
     b.add_figure('R1', 5, 2)
     print(b)

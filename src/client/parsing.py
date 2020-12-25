@@ -3,8 +3,13 @@ import re
 from chess.board import Board
 
 
-def parse_board(message):
-    b = Board()
+def parse_board_size(message):
+    message = message.replace('(', '').replace(')', '').replace(',', '').split(' ')
+    return int(message[1]), int(message[2])
+
+
+def parse_board(message, width, height):
+    b = Board(width, height)
     fig_info = re.findall(r'\([a-zA-Z]*\d* \d* \d*\)', message)
     for info in fig_info:
         info = info.replace('(', '').replace(')', '').split()
