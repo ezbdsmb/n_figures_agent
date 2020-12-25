@@ -28,8 +28,12 @@ class Agent(UDPClient):
                 if self.board.board[i][j] != '-' and self.board.board[i][j] != self.name and (i, j) in cells:
                     problems.append(self.board.board[i][j])
 
-        self.sendto("", self.judge_addr)
-        print(problems)
+        mes = ''
+        for p in problems:
+            mes += p
+            mes += ' '
+        self.sendto(mes, self.judge_addr)
+        print(mes)
 
     def run(self):
         # send init
