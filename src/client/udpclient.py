@@ -2,12 +2,12 @@ import socket
 
 
 class UDPClient:
-    def __init__(self, server_addr):
+    def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.server_addr = server_addr
 
-    def send(self, message):
-        self.sock.sendto(bytes(message, "utf-8"), self.server_addr)
+    def sendto(self, message, server_addr):
+        self.sock.sendto(bytes(message, "utf-8"), server_addr)
 
-    def recv(self):
-        return str(self.sock.recv(1024), "utf-8")
+    def recvfrom(self):
+        data, addr = self.sock.recvfrom(1024)
+        return str(data, "utf-8"), addr

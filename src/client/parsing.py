@@ -11,3 +11,10 @@ def parse_board(message):
         b.add_figure(info[0], int(info[1]), int(info[2]))
     return b
 
+
+def parse_name(data):
+    return data.split(' ')[1]
+
+
+if __name__ == '__main__':
+    print(parse_board('(Q1 0 0)(Q2 1 1)(Q3 0 5)'))
