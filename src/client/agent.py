@@ -15,6 +15,7 @@ class Agent(UDPClient):
         self.board = None
         self.width = 0
         self.height = 0
+
         self.figure = figure
 
     # TODO: change 8-8 to width-height
@@ -41,32 +42,29 @@ class Agent(UDPClient):
             mes += p
             mes += ' '
         self.sendto(mes, self.judge_addr)
-        print(mes)
+        # print(mes)
 
     def run(self):
         # send init
         self.sendto(f"init {self.figure}", self.server_addr)
-        print(f'send: "init {self.figure}"')
+        # print(f'send: "init {self.figure}"')
 
         # receive init name
         data, addr = self.recvfrom()
         self.name = parse_name(data)
-        print('received:', data)
+        # print('received:', data)
 
         # receive judge
         data, addr = self.recvfrom()
         self.width, self.height = parse_board_size(data)
         self.judge_addr = addr
-        print('received:', data)
+        # print('received:', data)
 
         while True:
             # receive board
             data, addr = self.recvfrom()
             self.board = parse_board(data, self.width, self.height)  # TODO: make update, not rewrite
-            print('received:', data)
-
-            print(self.name)
-            print(self.board)
+            # print('received:', data)
 
             # send collision
             self.send_collisions()
