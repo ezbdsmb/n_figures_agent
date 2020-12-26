@@ -13,11 +13,11 @@ def bishop_cells_under_attack(p, width=8, height=8):
     for k in range(max(width, height)):
         if p[0] + k <= width and p[1] + k <= height:
             cells.append((p[0] + k, p[1] + k))
-        if p[0] + k <= width and p[1] - k >= height:
+        if p[0] + k <= width and p[1] - k >= 0:
             cells.append((p[0] + k, p[1] - k))
-        if p[0] - k >= width and p[1] - k >= height:
+        if p[0] - k >= 0 and p[1] - k >= 0:
             cells.append((p[0] - k, p[1] - k))
-        if p[0] - k >= width and p[1] + k <= height:
+        if p[0] - k >= 0 and p[1] + k <= height:
             cells.append((p[0] - k, p[1] + k))
     return cells
 
