@@ -6,7 +6,7 @@ from time import sleep
 if __name__ == '__main__':
     N = 12
     for i in range(N):
-        a = Agent(figure='bishop')
+        a = Agent(figure='queen')
         thread = threading.Thread(target=a.run)
         thread.start()
 
